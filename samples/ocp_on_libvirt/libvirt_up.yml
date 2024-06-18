@@ -2,7 +2,7 @@
 - name: Up bootstrap VM
   hosts: vm_host
   vars:
-    ansible_python_interpreter: /usr/libexec/platform-python
+    ansible_python_interpreter: "{{ (ansible_virtualization_type == container) | ansible.builtin.ternary(discovered_interpreter_python, '/usr/libexec/platform-python') }}"
     hook_action: install
   tasks:
     - set_fact:
